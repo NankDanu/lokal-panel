@@ -5,7 +5,7 @@ Panel tuk kelola multi php dengan WSL + nginx.
 [![Platform](https://img.shields.io/badge/platform-Windows%2011-0078D6?logo=windows11&logoColor=white)](#)
 [![WSL2](https://img.shields.io/badge/WSL-2-4D4D4D?logo=linux&logoColor=white)](#)
 [![Nginx](https://img.shields.io/badge/server-Nginx-009639?logo=nginx&logoColor=white)](#)
-[![PHP](https://img.shields.io/badge/PHP-7.4%20%7C%208.1%20%7C%208.3-777BB4?logo=php&logoColor=white)](#)
+[![PHP](https://img.shields.io/badge/PHP-7.x%20%7C%208.x-777BB4?logo=php&logoColor=white)](#)
 [![Python](https://img.shields.io/badge/Python-3.9%2B-3776AB?logo=python&logoColor=white)](#)
 [![Ubuntu](https://img.shields.io/badge/distro-Ubuntu-E95420?logo=ubuntu&logoColor=white)](#)
 [![License: MIT](https://img.shields.io/badge/license-MIT-yellow.svg)](LICENSE)
@@ -164,5 +164,5 @@ Open source, gratis, bebas dipake — lisensi [MIT](LICENSE). Mau dipake buat pr
 
 ---
 
-Ngide dari **Nank**, di **Cikarang**, ditemenin secangkir kopi sama bantuan AI. 🙏☕
+Ngide ide sambil ditemenin kupi kagak pake ruti dan asisten-AI. 🙏☕
 
