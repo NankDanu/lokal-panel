@@ -1,0 +1,74 @@
+{% if msg %}<div class="alert alert-success py-2 small mb-2">{{ msg }}</div>{% endif %}
+{% if err %}<div class="alert alert-danger py-2 small mb-2" style="white-space: pre-wrap">{{ err }}</div>{% endif %}
+
+<table class="table table-sm align-middle mb-0">
+  <thead>
+    <tr class="text-secondary small">
+      <th>Domain</th><th>PHP</th><th>Root</th><th>Status</th><th>Hosts</th><th class="text-end">Aksi</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for s in sites %}
+    <tr class="{{ '' if s.enabled else 'opacity-50' }}">
+      <td>
+        {% if s.domain != '-' %}
+          <a href="http://{{ s.domain }}" target="_blank" class="text-decoration-none mono">{{ s.domain }}</a>
+        {% else %}
+          <span class="mono text-secondary">{{ s.name }}</span>
+        {% endif %}
+      </td>
+      <td>{% if s.php != '-' %}<span class="badge text-bg-info">{{ s.php }}</span>{% else %}-{% endif %}</td>
+      <td class="mono text-secondary small">{{ s.win_root }}</td>
+      <td>
+        {% if s.source == 'avail' %}
+          <button class="btn btn-sm py-0 btn-{{ 'success' if s.enabled else 'outline-secondary' }}"
+                  hx-post="/sites/toggle/{{ s.name }}" hx-target="#sites" hx-swap="innerHTML"
+                  title="{{ 'Klik untuk disable' if s.enabled else 'Klik untuk enable' }}">
+            {{ 'on' if s.enabled else 'off' }}
+          </button>
+        {% else %}
+          <span class="badge bg-secondary" title="Dimuat dari include lain ({{ s.file }})">include</span>
+        {% endif %}
+      </td>
+      <td>
+        {% if s.in_hosts %}
+          <span class="badge bg-success">ok</span>
+        {% else %}
+          <button class="btn btn-warning btn-sm py-0"
+                  hx-post="/hosts/add/{{ s.domain }}" hx-target="#sites" hx-swap="innerHTML"
+                  title="Klik untuk menambahkan 127.0.0.1 {{ s.domain }} ke hosts (dialog UAC akan muncul)">
+            + hosts
+          </button>
+        {% endif %}
+      </td>
+      <td class="text-end text-nowrap">
+        <button class="btn btn-outline-primary btn-sm py-0"
+                hx-get="/sites/edit?file={{ s.file|urlencode }}" hx-target="#detail-view" hx-swap="innerHTML">edit</button>
+        <button class="btn btn-outline-secondary btn-sm py-0"
+                hx-get="/sites/logs/{{ s.log_name }}" hx-target="#detail-view" hx-swap="innerHTML">log</button>
+        {% if s.source == 'avail' %}
+        <button class="btn btn-outline-danger btn-sm py-0"
+                hx-post="/sites/delete/{{ s.name }}" hx-target="#sites" hx-swap="innerHTML"
+                hx-confirm="Hapus site {{ s.name }}? (folder project TIDAK ikut terhapus)">&times;</button>
+        {% endif %}
+      </td>
+    </tr>
+  {% else %}
+    <tr><td colspan="6" class="text-secondary p-3">
+      Tidak ada site terdeteksi. Jika seharusnya ada, cek: apakah distro WSL yang benar
+      (set <code>distro</code> di panel.ini), dan apakah nginx memuat config-nya (<code>nginx -T</code>).
+    </td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+{% set missing = sites | selectattr('enabled') | rejectattr('in_hosts') | list %}
+{% if missing %}
+<div class="alert alert-warning small mt-2 mb-0">
+  Domain di atas belum terdaftar di hosts — klik tombol <b>+ hosts</b> pada barisnya
+  (akan muncul konfirmasi UAC), atau tambahkan manual ke
+  <code>C:\Windows\System32\drivers\etc\hosts</code>:
+  <pre class="mono mb-0 mt-1">{% for s in missing %}127.0.0.1  {{ s.domain }}
+{% endfor %}</pre>
+</div>
+{% endif %}

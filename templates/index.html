@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="row g-4">
+  <div class="col-md-4">
+    <!-- Services -->
+    <div class="card">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <span>Services</span>
+        <span class="text-secondary small">auto-refresh 10s</span>
+      </div>
+      <div class="card-body p-2" id="services"
+           hx-get="/partial/services" hx-trigger="load, every 10s" hx-swap="innerHTML">
+        <div class="text-center text-secondary p-3">Memuat…</div>
+      </div>
+    </div>
+
+    <!-- Create site -->
+    <div class="card mt-4">
+      <div class="card-header">Site Baru</div>
+      <div class="card-body">
+        <form hx-post="/sites/create" hx-target="#sites" hx-swap="innerHTML">
+          <div class="mb-1">
+            <label class="form-label small mb-1">Path project</label>
+            <div class="input-group input-group-sm">
+              <input name="path" id="path-input" class="form-control mono" placeholder="clients/kasir-app" required>
+              <button type="button" class="btn btn-outline-secondary"
+                      hx-get="/browse" hx-target="#browse-area" hx-swap="innerHTML">&#128193;</button>
+            </div>
+          </div>
+          <div id="browse-area" class="mb-2"></div>
+          <div class="row g-2 mb-2">
+            <div class="col-5">
+              <label class="form-label small mb-1">PHP</label>
+              <select name="php" class="form-select form-select-sm mono" required>
+                <option value="" disabled {% if not php_versions %}selected{% endif %}>pilih versi</option>
+                {% for v in php_versions %}<option value="{{ v }}">{{ v }}</option>{% endfor %}
+              </select>
+            </div>
+            <div class="col-7">
+              <label class="form-label small mb-1">Subdir public</label>
+              <input name="public" class="form-control form-control-sm mono" placeholder="public (opsional)">
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label small mb-1">Custom domain</label>
+            <input name="domain" class="form-control form-control-sm mono" placeholder="kasir.lo (opsional)">
+          </div>
+          <button class="btn btn-primary btn-sm w-100">Buat Site</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sites -->
+  <div class="col-md-8">
+    <div class="card">
+      <div class="card-header">Sites</div>
+      <div class="card-body p-2" id="sites"
+           hx-get="/partial/sites" hx-trigger="load, refreshSites from:body" hx-swap="innerHTML">
+        <div class="text-center text-secondary p-3">Memuat…</div>
+      </div>
+    </div>
+    <div id="detail-view" class="mt-3"></div>
+  </div>
+</div>
+
+<script>
+  function setPath(v) {
+    document.getElementById('path-input').value = v;
+  }
+</script>
+
+{% endblock %}

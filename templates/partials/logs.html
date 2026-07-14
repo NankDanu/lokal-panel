@@ -1,0 +1,14 @@
+<div class="card">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <span>Error log — <span class="mono">{{ domain }}</span></span>
+    <span>
+      <button class="btn btn-outline-secondary btn-sm py-0"
+              hx-get="/sites/logs/{{ domain }}" hx-target="#detail-view" hx-swap="innerHTML">refresh</button>
+      <button class="btn btn-outline-secondary btn-sm py-0"
+              onclick="document.getElementById('detail-view').innerHTML=''">tutup</button>
+    </span>
+  </div>
+  <div class="card-body p-2">
+    <pre class="logbox mono mb-0">{{ log }}</pre>
+  </div>
+</div>

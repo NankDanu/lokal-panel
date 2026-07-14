@@ -1,0 +1,18 @@
+<div class="card">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <span>Edit config — <span class="mono">{{ file }}</span></span>
+    <button class="btn btn-outline-secondary btn-sm py-0"
+            onclick="document.getElementById('detail-view').innerHTML=''">tutup</button>
+  </div>
+  <div class="card-body p-2">
+    {% if msg %}<div class="alert alert-success py-2 small">{{ msg }}</div>{% endif %}
+    {% if err %}<div class="alert alert-danger py-2 small" style="white-space: pre-wrap">{{ err }}</div>{% endif %}
+    <form hx-post="/sites/edit?file={{ file|urlencode }}" hx-target="#detail-view" hx-swap="innerHTML">
+      <textarea name="content" class="form-control mono" rows="18" spellcheck="false">{{ content }}</textarea>
+      <div class="d-flex justify-content-between align-items-center mt-2">
+        <span class="text-secondary small">Disimpan setelah lolos <code>nginx -t</code>; jika gagal otomatis rollback.</span>
+        <button class="btn btn-primary btn-sm">Simpan &amp; Reload</button>
+      </div>
+    </form>
+  </div>
+</div>

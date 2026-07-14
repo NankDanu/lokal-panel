@@ -1,0 +1,17 @@
+# Copy file ini ke: C:\Users\<user>\.wslconfig
+# Lalu restart WSL: wsl --shutdown
+
+[wsl2]
+# Batasi RAM agar Windows tetap lega
+memory=6GB
+processors=4
+
+# Networking mirrored = localhost stabil, tidak ada masalah forwarding
+# (butuh Windows 11 22H2+)
+networkingMode=mirrored
+
+# Kembalikan RAM yang tidak terpakai ke Windows
+autoMemoryReclaim=gradual
+
+# Kecilkan ukuran virtual disk otomatis
+sparseVhd=true

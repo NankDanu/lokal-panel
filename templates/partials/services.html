@@ -1,0 +1,20 @@
+<table class="table table-sm align-middle mb-0">
+  <tbody>
+  {% for s in services %}
+    <tr>
+      <td class="mono">{{ s.name }}</td>
+      <td>
+        <span class="badge bg-{{ 'success' if s.active else 'danger' }}">{{ s.status }}</span>
+      </td>
+      <td class="text-end">
+        <button class="btn btn-outline-secondary btn-sm py-0"
+                hx-post="/services/restart/{{ s.name }}"
+                hx-target="#services" hx-swap="innerHTML"
+                title="Restart">&#8635;</button>
+      </td>
+    </tr>
+  {% else %}
+    <tr><td class="text-secondary p-3">WSL tidak merespons atau belum ada service.</td></tr>
+  {% endfor %}
+  </tbody>
+</table>

@@ -1,0 +1,27 @@
+<div class="border rounded p-2 small" style="max-height: 220px; overflow: auto">
+  <div class="d-flex justify-content-between align-items-center mb-1">
+    <span class="mono text-secondary">/{{ rel }}</span>
+    <span>
+      {% if rel %}
+        <button type="button" class="btn btn-outline-secondary btn-sm py-0"
+                hx-get="/browse?path={{ parent|urlencode }}" hx-target="#browse-area" hx-swap="innerHTML">&#8593; naik</button>
+      {% endif %}
+      <button type="button" class="btn btn-outline-secondary btn-sm py-0"
+              onclick="document.getElementById('browse-area').innerHTML=''">tutup</button>
+    </span>
+  </div>
+  {% for d in dirs %}
+    {% set p = rel + '/' + d if rel else d %}
+    <div class="d-flex justify-content-between align-items-center py-1 border-top">
+      <span class="mono">&#128193; {{ d }}</span>
+      <span class="text-nowrap">
+        <button type="button" class="btn btn-outline-primary btn-sm py-0"
+                onclick="setPath('{{ p }}')">pilih</button>
+        <button type="button" class="btn btn-outline-secondary btn-sm py-0"
+                hx-get="/browse?path={{ p|urlencode }}" hx-target="#browse-area" hx-swap="innerHTML">buka</button>
+      </span>
+    </div>
+  {% else %}
+    <div class="text-secondary py-1 border-top">(tidak ada subfolder)</div>
+  {% endfor %}
+</div>

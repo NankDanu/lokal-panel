@@ -1,0 +1,18 @@
+<table class="table table-sm align-middle mb-0">
+  <tbody>
+  {% for p in php %}
+    <tr>
+      <td>
+        <span class="badge text-bg-info">{{ p.ver }}</span>
+        <span class="text-secondary small ms-1">{{ p.full }}</span>
+      </td>
+      <td><span class="badge bg-{{ 'success' if p.active else 'danger' }}">{{ p.status }}</span></td>
+    </tr>
+    <tr>
+      <td colspan="2" class="mono text-secondary small border-0 pt-0">{{ p.sock }}</td>
+    </tr>
+  {% else %}
+    <tr><td class="text-secondary p-3">Tidak ada PHP-FPM terdeteksi di /etc/php.</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
