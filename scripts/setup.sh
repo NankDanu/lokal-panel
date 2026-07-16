@@ -7,7 +7,7 @@
 set -euo pipefail
 
 # Versi PHP yang diinstall — ubah sesuai kebutuhan
-PHP_VERSIONS="7.4 8.1 8.3"
+PHP_VERSIONS="7.4 8.2 8.4"
 
 echo "==> Update & tambah PPA ondrej/php"
 apt-get update
