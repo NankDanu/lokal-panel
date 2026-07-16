@@ -1,0 +1,12 @@
+; Konfigurasi Lokalan (Lokal Panel) — bisa diedit lewat halaman Settings
+; Copy file ini jadi panel.ini, lalu sesuaikan sama komputer ente.
+; panel.ini gak di-track git (beda-beda tiap PC) — lihat .gitignore
+[panel]
+; Folder development di Windows (path project relatif dari sini)
+base_dir = C:\DEV
+; Nama distro WSL, kosong = default (cek: wsl --list)
+distro = Ubuntu-24.04
+; Folder scripts dilihat dari WSL, kosong = otomatis (./scripts)
+scripts_dir =
+host = 127.0.0.1
+port = 9000

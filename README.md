@@ -76,7 +76,7 @@ Satu folder, dua dunia: `C:\Dev\project-a` (Windows) = `/mnt/c/Dev/project-a` (W
 
 ## Instalasi
 
-**1.** Edit `panel.ini`, seting sesuai komputer ente:
+**1.** Copy `panel.ini.example` jadi `panel.ini`, terus seting sesuai komputer ente :
 
 ```ini
 [panel]
