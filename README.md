@@ -150,6 +150,10 @@ Biar Lokalan otomatis nyala pas ente login — Task Scheduler → Create Task:
 - Semua input divalidasi regex + `shlex.quote` dulu sebelom masuk shell.
 - Aksi restart dibatesin whitelist (`nginx`, `php*-fpm`) doang.
 
+## Issue
+
+- **Performa I/O lintas filesystem (Windows ↔ WSL)** — karena project disimpen di Windows dan diakses WSL lewat `/mnt/c` (protokol 9P), akses file jadi lebih lambat dibanding native ext4 WSL. Kerasa banget pas request pertama / tanpa OPcache, soalnya PHP-FPM harus baca banyak file kecil (autoload, vendor) lewat 9P. Mitigasi sementara: pastiin OPcache nyala di tiap versi PHP, exclude folder `base_dir` dari Windows Defender real-time scan. **TODO:** cek/tambahin validasi & reminder otomatis di panel (misal warning kalo OPcache belom aktif buat suatu versi PHP), atau dokumentasiin setup optimal di `scripts/README.md`.
+
 ## Tips: biar kagak ribet urusan hosts lagi selamanya
 
 Install [Acrylic DNS Proxy](https://mayakron.altervista.org/support/acrylic/Home.htm) di Windows, tambahin `127.0.0.1 *.lo` di AcrylicHosts.txt, terus set DNS adapter ke `127.0.0.1`. Semua domain `.lo` langsung jalan tanpa perlu edit hosts lagi, kolom "Hosts" di panel juga boleh dicuekin aje.
